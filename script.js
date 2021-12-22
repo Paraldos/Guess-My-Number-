@@ -45,8 +45,8 @@ CHECK.addEventListener("click", () => {
     MESSAGE.textContent = "🛑 No Number!";
   } else {
     if (guessedNumber == secretNumber) _guess_correct();
-    if (guessedNumber < secretNumber) _guess_to_low();
-    if (guessedNumber > secretNumber) _guess_to_high();
+    if (guessedNumber < secretNumber) _guess_wrong("⬇️ To Low!");
+    if (guessedNumber > secretNumber) _guess_wrong("⬆️ To High!");
   }
 
   _update_score();
@@ -54,6 +54,10 @@ CHECK.addEventListener("click", () => {
 
 function _update_score() {
   SCORE.textContent = scoreCounter;
+}
+
+function _update_highscore() {
+  if (highscoreCounter < scoreCounter) highscoreCounter = scoreCounter;
   HIGHSCORE.textContent = highscoreCounter;
 }
 
@@ -61,16 +65,11 @@ function _guess_correct() {
   MESSAGE.textContent = "🎉 Correct Number!";
   NUMBER.textContent = secretNumber;
   gamePaused = true;
-  if (highscoreCounter < scoreCounter) highscoreCounter = scoreCounter;
   _change_style("#60b347", "30rem");
+  _update_highscore();
 }
 
-function _guess_to_low() {
-  MESSAGE.textContent = "⬇️ To Low!";
-  scoreCounter--;
-}
-
-function _guess_to_high() {
-  MESSAGE.textContent = "⬆️ To High!";
+function _guess_wrong(x) {
+  MESSAGE.textContent = x;
   scoreCounter--;
 }
